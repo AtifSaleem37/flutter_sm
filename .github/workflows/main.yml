@@ -2,7 +2,7 @@ on:
   push:
     branches:
       - main
-name: "Build & Release "
+name: "Build & Release"
 jobs:
   apk_build:
     name: Build & Release apk
