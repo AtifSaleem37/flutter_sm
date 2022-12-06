@@ -23,5 +23,6 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifacts: "build/app/outputs/apk/debug/*.apk"
+          if: github.ref_name == 'main'
           tag: v1.0.${{ github.run_number }}
           token: ${{ secrets.TOKEN }}
