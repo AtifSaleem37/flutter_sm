@@ -22,21 +22,21 @@ jobs:
       - run: flutter test
       - run: flutter build apk --debug --split-per-abi
       - name: Push to Releases main
-        if: github.ref_name == 'main'
+        if: github.event.pull_request.base.ref == 'main'
         uses: ncipollo/release-action@v1
         with:
           artifacts: "build/app/outputs/apk/debug/*.apk"
           tag: v1.0.${{ github.run_number }}
           token: ${{ secrets.TOKEN }}
       - name: Push to Releases dev
-        if: github.ref_name == 'dev'
+        if: github.event.pull_request.base.ref == 'dev'
         uses: ncipollo/release-action@v1
         with:
           artifacts: "build/app/outputs/apk/debug/*.apk"
           tag: v2.0.${{ github.run_number }}
           token: ${{ secrets.TOKEN }}
       - name: Push to Releases qa
-        if: github.ref_name == 'qa'
+        if: github.event.pull_request.base.ref == 'qa'
         uses: ncipollo/release-action@v1
         with:
           artifacts: "build/app/outputs/apk/debug/*.apk"
