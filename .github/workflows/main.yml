@@ -34,7 +34,7 @@ jobs:
         with:
           flutter-version: '3.3.6'
       - run: flutter pub get
-      - run: flutter build ipa --release --export-options-plist=ios/Runner/ExportOptions.plist
+      - run: flutter build ipa --release
       - name: Push to Releases
         uses: ncipollo/release-action@v1
         with:
