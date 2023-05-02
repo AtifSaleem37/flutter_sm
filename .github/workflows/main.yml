@@ -1,12 +1,6 @@
+name: "Build & Release"
 on:
   workflow_dispatch:
-  pull_request:
-    types: [opened]
-    branches:
-      - main
-      - dev
-      - qa
-name: "Build & Release"
 jobs:
   apk_build:
     name: Build & Release apk
@@ -19,29 +13,14 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           flutter-version: '3.3.6'
+      - run: flutter clean
       - run: flutter pub get
-      - run: flutter test
       - run: flutter build apk --debug --split-per-abi
       - name: Push to Releases main
-        if: github.event.pull_request.base.ref == 'main'
         uses: ncipollo/release-action@v1
         with:
           artifacts: "build/app/outputs/apk/debug/*.apk"
           tag: v1.0.${{ github.run_number }}
-          token: ${{ secrets.TOKEN }}
-      - name: Push to Releases dev
-        if: github.event.pull_request.base.ref == 'dev'
-        uses: ncipollo/release-action@v1
-        with:
-          artifacts: "build/app/outputs/apk/debug/*.apk"
-          tag: d2.0.${{ github.run_number }}
-          token: ${{ secrets.TOKEN }}
-      - name: Push to Releases qa
-        if: github.event.pull_request.base.ref == 'qa'
-        uses: ncipollo/release-action@v1
-        with:
-          artifacts: "build/app/outputs/apk/debug/*.apk"
-          tag: v3.0.${{ github.run_number }}
           token: ${{ secrets.TOKEN }}
   ipa_build:
     name: Build & Release ipa
